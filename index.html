@@ -192,7 +192,7 @@
     <main class="container">
         <section class="section">
             <h2>מה זה מדיה בוקס?</h2>
-            <p>מדיה בוקס הינה ממשק משתמש חדשני המאגד סדרות, סרטים ותכנים מכל רחבי הרשת תחת מעטפת אחת נוחה. האפליקציה מותאמת באופן מלא ל-Android TV. האפליקציה פועלת גם על טאבלטים וסמארטפונים, אך ייתכן ותאימות הממשק במכשירים אלו לא תהיה מלאה.
+            <p>מדיה בוקס הינה ממשק משתמש חדשני המאגד סדרות, סרטים ותכנים מכל רחבי הרשת תחת מעטפת אחת נוחה. האפליקציה מותאמת באופן מלא לAndroid TV. האפליקציה פועלת גם על טאבלטים וסמארטפונים, אך ייתכן ותאימות הממשק במכשירים אלו לא תהיה מלאה.
             <br><br>
             <strong>חשוב לדעת: האפליקציה פועלת כמנוע חיפוש בלבד. האפליקציה איננה מאחסנת, מארחת או מפיצה תכני וידאו באופן עצמאי, וכל שימוש בתכנים אלו הינו באחריות המשתמש בלבד.</strong></p>
         </section>
@@ -213,6 +213,7 @@
 
         <section class="section" style="text-align: center;">
             <h2>הורדה והתקנה</h2>
+            <p>לחצו על כפתור ההורדה לקבלת הקובץ ישירות למכשירכם, או השתמשו בקוד הDownloader הייעודי להתקנה מהירה בסטרימר</p>
             
             <a href="https://tiny.cc/mboxil" class="download-btn" onclick="hitCounter()">הורד עכשיו</a>
             
@@ -238,6 +239,14 @@
                 <iframe src="https://player.vimeo.com/video/845571390" allowfullscreen></iframe>
             </div>
         </section>
+
+        <section class="section">
+            <h2>איך מעדכנים?</h2>
+            <p>צפו במדריך הקצר המסביר איך לעדכן את האפליקציה לגרסה האחרונה</p>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/714170680" allowfullscreen></iframe>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -248,7 +257,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <script>
-    // Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyDZ8oOj2xN2fboDQR6Zg4xs1aCFPC-tpCs",
         authDomain: "mb-site-dl-count.firebaseapp.com",
@@ -261,22 +269,21 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    const counterRef = db.ref('download_count');
 
-    // Load Counter
-    counterRef.on('value', (snapshot) => {
-        const count = snapshot.val() || 0;
-        document.getElementById('count').innerText = (count + 22460).toLocaleString();
+    db.ref().on('value', (snapshot) => {
+        const data = snapshot.val() || {};
+        const siteClicks = data.download_count || 0;
+        const baseOffset = data.base_offset || 22460;
+        const total = siteClicks + baseOffset;
+        document.getElementById('count').innerText = total.toLocaleString();
     });
 
-    // Handle Download Click
     function hitCounter() {
-        counterRef.transaction((currentCount) => {
+        db.ref('download_count').transaction((currentCount) => {
             return (currentCount || 0) + 1;
         });
     }
 
-    // Share Function
     function shareSite() {
         const shareLink = "https://tiny.cc/mboxsite";
         if (navigator.share) {
@@ -285,7 +292,7 @@
     }
 
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => alert("הקישור הועתק ללוח!"));
+        navigator.clipboard.writeText(text).then(() => alert("הקישור הועתקה ללוח!"));
     }
     </script>
 </body>
