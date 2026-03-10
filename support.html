@@ -15,7 +15,7 @@
             --highlight: #fbbf24;
             --card: #171717;
             --border: #f59e0b;
-            --gold-gradient: linear-gradient(135deg, #fbbf24, #d97706);
+            --gold-gradient: linear-gradient(180deg, rgba(251, 191, 36, 0.9) 0%, rgba(217, 119, 6, 1) 100%);
         }
 
         body { 
@@ -45,12 +45,6 @@
             box-sizing: border-box;
         }
 
-        .header-logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
         .header-logo img {
             height: 50px;
             border-radius: 8px;
@@ -63,13 +57,13 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            background: #0d0d0d;
+            background: rgba(13, 13, 13, 0.9);
             padding: 4px;
             border-radius: 50px;
-            border: 1.5px solid #2a2a2a;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             z-index: 1;
+            gap: 5px;
         }
 
         .nav-link {
@@ -87,14 +81,12 @@
             transition: color 0.4s ease;
         }
 
-        .nav-link.active {
-            color: #ffffff !important;
+        /* טקסט ואייקון נהיה שחור כשהבועה מעליו (לפי קונטקסט) */
+        .nav-link.active-blob {
+            color: #000 !important;
         }
 
-        .nav-link i { font-size: 1.1rem; transition: 0.3s; }
-        .nav-link.active i { color: #000; } /* האייקון נהיה כהה על הרקע הזהוב */
-
-        /* בועת הזכוכית הנוזלית */
+        /* בועת הזכוכית הנוזלית - האפקט הדינמי */
         .liquid-blob {
             position: absolute;
             top: 4px;
@@ -103,9 +95,14 @@
             width: 0;
             background: var(--gold-gradient);
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
             z-index: 1;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            /* אנימציה קפיצית שיוצרת תחושת חומר חי */
+            transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            /* השתקפויות אור Specular Highlights */
+            box-shadow: 
+                0 4px 15px rgba(245, 158, 11, 0.5),
+                inset 0 4px 6px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* שיתוף */
@@ -121,11 +118,11 @@
             gap: 8px;
             font-size: 15px;
             border: none;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
             transition: 0.3s;
         }
-        .header-share:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--highlight); }
 
-        /* --- תוכן הדף --- */
+        /* --- תוכן --- */
         .container { 
             max-width: 900px; 
             margin: 0 auto; 
@@ -143,11 +140,9 @@
             margin-bottom: 30px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
-
         .support-card h2 { 
             color: var(--highlight); 
             margin-top: 0; 
-            font-size: 1.5rem; 
             border-bottom: 1px solid #333; 
             padding-bottom: 10px; 
             display: flex;
@@ -164,11 +159,9 @@
         .footer { text-align: center; padding: 40px 0; color: #71717a; border-top: 1px solid #1a1a1a; margin-top: 50px; }
 
         @media (max-width: 600px) {
-            .site-header { height: 70px; padding: 0 15px; }
-            .header-logo img { height: 40px; }
-            .nav-link { padding: 8px 15px; font-size: 14px; }
+            .site-header { height: 70px; }
+            .nav-link span { display: none; }
             .header-share span { display: none; }
-            h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -181,11 +174,11 @@
 
         <nav class="nav-container-liquid">
             <div class="liquid-blob"></div>
-            <a href="https://mboxil.github.io/index.html" class="nav-link">
+            <a href="https://mboxil.github.io/index.html" class="nav-link" id="nav-home">
                 <i class="fas fa-home"></i>
                 <span>ראשי</span>
             </a>
-            <a href="https://mboxil.github.io/support.html" class="nav-link active">
+            <a href="https://mboxil.github.io/support.html" class="nav-link" id="nav-support">
                 <i class="fas fa-headset"></i>
                 <span>תמיכה</span>
             </a>
@@ -199,7 +192,6 @@
 
     <div class="container">
         <h1>תמיכה ופתרון תקלות</h1>
-
 
         <div class="support-card">
             <h2> ערוץ לא מנגן</h2>
@@ -223,30 +215,43 @@
     </footer>
 
     <script>
-        // אנימציית הניווט הנוזלית
         document.addEventListener("DOMContentLoaded", function() {
             const nav = document.querySelector(".nav-container-liquid");
-            const links = document.querySelectorAll(".nav-link");
             const blob = document.querySelector(".liquid-blob");
+            const links = document.querySelectorAll(".nav-link");
 
-            function updateBlob() {
-                const activeLink = document.querySelector(".nav-link.active");
-                if (activeLink) {
-                    const rect = activeLink.getBoundingClientRect();
-                    const navRect = nav.getBoundingClientRect();
-                    blob.style.width = `${rect.width}px`;
-                    blob.style.left = `${rect.left - navRect.left}px`;
-                }
+            function moveBlob(element) {
+                if (!element) return;
+                const rect = element.getBoundingClientRect();
+                const navRect = nav.getBoundingClientRect();
+
+                blob.style.width = `${rect.width}px`;
+                blob.style.left = `${rect.left - navRect.left}px`;
+
+                // עדכון מחלקת הצבע לטקסט
+                links.forEach(l => l.classList.remove('active-blob'));
+                element.classList.add('active-blob');
             }
 
-            // הפעלה ראשונית
-            setTimeout(updateBlob, 100);
+            // זיהוי הדף הנוכחי והצבת הבועה
+            const isSupportPage = window.location.pathname.includes("support.html");
+            const activeInitial = isSupportPage ? document.getElementById("nav-support") : document.getElementById("nav-home");
+            
+            setTimeout(() => moveBlob(activeInitial), 150);
 
-            // עדכון בשינוי גודל מסך
-            window.addEventListener("resize", updateBlob);
+            // תגובה למעבר עכבר (הבועה עוקבת אחרי המשתמש)
+            links.forEach(link => {
+                link.addEventListener("mouseenter", function() {
+                    moveBlob(this);
+                });
+            });
+
+            // חזרה למצב המקורי כשיוצאים מהתפריט
+            nav.addEventListener("mouseleave", function() {
+                moveBlob(activeInitial);
+            });
         });
 
-        // פונקציית שיתוף
         function shareSite() {
             const shareLink = "https://tiny.cc/mboxsite";
             if (navigator.share) {
