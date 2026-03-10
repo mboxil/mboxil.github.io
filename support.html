@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>תמיכה - מדיה בוקס</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --highlight: #fbbf24;
+            --card: #171717;
+            --border: #f59e0b;
+            --gold-gradient: linear-gradient(135deg, #fbbf24, #d97706);
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Rubik', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; 
+        }
+
+        /* --- הדר שקוף (Glassmorphism) --- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 75px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100000;
+            box-sizing: border-box;
+        }
+
+        .header-logo img {
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .nav-center-wrapper {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            background: rgba(23, 23, 23, 0.8);
+            padding: 5px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+        }
+        .nav-link i { color: var(--highlight); }
+        .nav-sep { width: 1px; height: 20px; background: rgba(245, 158, 11, 0.3); align-self: center; }
+
+        .header-share {
+            background: var(--gold-gradient);
+            color: #000;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        /* --- תוכן --- */
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            padding-top: 120px; 
+        }
+        
+        h1 { color: var(--highlight); text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
+
+        .support-card { 
+            background: var(--card); 
+            border: 1px solid #262626; 
+            border-radius: 20px; 
+            padding: 25px; 
+            margin-bottom: 30px; 
+        }
+        .support-card h2 { 
+            color: var(--highlight); 
+            margin-top: 0; 
+            border-bottom: 1px solid #333; 
+            padding-bottom: 10px; 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-container { 
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
+            border-radius: 15px; margin-top: 20px; border: 1px solid #333; 
+        }
+        .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+        .footer { text-align: center; padding: 40px 0; color: #71717a; border-top: 1px solid #1a1a1a; margin-top: 50px; }
+
+        @media (max-width: 600px) {
+            .site-header { height: 65px; }
+            .header-logo img { height: 40px; }
+            .header-share span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="https://mboxil.github.io/index.html" class="header-logo">
+            <img src="https://raw.githubusercontent.com/mboxil/site/main/logo.jpg" alt="מדיה בוקס">
+        </a>
+
+        <div class="nav-center-wrapper">
+            <a href="https://mboxil.github.io/index.html" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span>ראשי</span>
+            </a>
+            <div class="nav-sep"></div>
+            <a href="https://mboxil.github.io/support.html" class="nav-link">
+                <i class="fas fa-headset"></i>
+                <span>תמיכה</span>
+            </a>
+        </div>
+
+        <div class="header-share" onclick="shareSite()">
+            <i class="fas fa-share-alt"></i>
+            <span>שיתוף</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>תמיכה ופתרון תקלות</h1>
+
+        <div class="support-card">
+            <h2> ערוץ לא מנגן</h2>
+            <p>החלפת מקור ניגון בצורה פשוטה ומהירה.</p>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/1171393659" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="support-card">
+            <h2> אין תוצאות בסרטים וסדרות </h2>
+            <p>מחיקת נתונים לחזרה להגדרות יצרן. </p>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/1171951589" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 מדיה בוקס - כל הזכויות שמורות</p>
+    </footer>
+
+    <script>
+        function shareSite() {
+            const shareLink = "https://tiny.cc/mboxsite";
+            if (navigator.share) {
+                navigator.share({ url: shareLink }).catch(() => copyToClipboard(shareLink));
+            } else { copyToClipboard(shareLink); }
+        }
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => alert("הקישור הועתק ללוח!"));
+        }
+    </script>
+</body>
+</html>
