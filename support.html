@@ -24,9 +24,10 @@
             background: var(--bg); 
             color: var(--text); 
             line-height: 1.6; 
+            overflow-x: hidden;
         }
 
-        /* --- הדר שקוף (Glassmorphism) --- */
+        /* --- הדר שקוף --- */
         .site-header {
             position: fixed;
             top: 0;
@@ -43,6 +44,18 @@
             padding: 0 5%;
             z-index: 100000;
             box-sizing: border-box;
+        }
+
+        /* הגדרת לחיצה בסיסית לכל האלמנטים הלחיצים */
+        .header-logo, .nav-link, .header-share {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent; /* מסיר את הריבוע הכחול בנייד */
+        }
+
+        /* הוספת מחלקה שתופעל דרך ה-JS */
+        .is-pressed {
+            transform: scale(0.85) !important;
         }
 
         .header-logo img {
@@ -78,15 +91,10 @@
             padding: 10px 25px;
             border-radius: 50px;
             z-index: 2;
-            transition: color 0.4s ease;
         }
 
-        /* טקסט ואייקון נהיה שחור כשהבועה מעליו (לפי קונטקסט) */
-        .nav-link.active-blob {
-            color: #000 !important;
-        }
+        .nav-link.active-blob { color: #000 !important; }
 
-        /* בועת הזכוכית הנוזלית - האפקט הדינמי */
         .liquid-blob {
             position: absolute;
             top: 4px;
@@ -96,66 +104,31 @@
             background: var(--gold-gradient);
             border-radius: 50px;
             z-index: 1;
-            /* אנימציה קפיצית שיוצרת תחושת חומר חי */
             transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-            /* השתקפויות אור Specular Highlights */
-            box-shadow: 
-                0 4px 15px rgba(245, 158, 11, 0.5),
-                inset 0 4px 6px rgba(255, 255, 255, 0.4),
-                inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5),
+                        inset 0 4px 6px rgba(255, 255, 255, 0.4);
         }
 
-        /* שיתוף */
         .header-share {
             background: var(--gold-gradient);
             color: #000;
             padding: 8px 20px;
             border-radius: 50px;
             font-weight: bold;
-            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 15px;
             border: none;
-            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
-            transition: 0.3s;
         }
 
         /* --- תוכן --- */
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 20px; 
-            padding-top: 130px; 
-        }
-        
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; padding-top: 130px; }
         h1 { color: var(--highlight); text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
-
-        .support-card { 
-            background: var(--card); 
-            border: 1px solid #262626; 
-            border-radius: 20px; 
-            padding: 25px; 
-            margin-bottom: 30px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
-        .support-card h2 { 
-            color: var(--highlight); 
-            margin-top: 0; 
-            border-bottom: 1px solid #333; 
-            padding-bottom: 10px; 
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .video-container { 
-            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
-            border-radius: 15px; margin-top: 20px; border: 1px solid #333; 
-        }
+        .support-card { background: var(--card); border: 1px solid #262626; border-radius: 20px; padding: 25px; margin-bottom: 30px; }
+        .support-card h2 { color: var(--highlight); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; margin-top: 20px; border: 1px solid #333; }
         .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
-
         .footer { text-align: center; padding: 40px 0; color: #71717a; border-top: 1px solid #1a1a1a; margin-top: 50px; }
 
         @media (max-width: 600px) {
@@ -168,23 +141,23 @@
 <body>
 
     <header class="site-header">
-        <a href="https://mboxil.github.io/index.html" class="header-logo">
+        <a href="https://mboxil.github.io/index.html" class="header-logo animate-click">
             <img src="https://raw.githubusercontent.com/mboxil/site/main/logo.jpg" alt="מדיה בוקס">
         </a>
 
         <nav class="nav-container-liquid">
             <div class="liquid-blob"></div>
-            <a href="https://mboxil.github.io/index.html" class="nav-link" id="nav-home">
+            <a href="https://mboxil.github.io/index.html" class="nav-link animate-click" id="nav-home">
                 <i class="fas fa-home"></i>
                 <span>ראשי</span>
             </a>
-            <a href="https://mboxil.github.io/support.html" class="nav-link" id="nav-support">
+            <a href="https://mboxil.github.io/support.html" class="nav-link animate-click" id="nav-support">
                 <i class="fas fa-headset"></i>
                 <span>תמיכה</span>
             </a>
         </nav>
 
-        <div class="header-share" onclick="shareSite()">
+        <div class="header-share animate-click" onclick="shareSite()">
             <i class="fas fa-share-alt"></i>
             <span>שיתוף</span>
         </div>
@@ -192,7 +165,6 @@
 
     <div class="container">
         <h1>תמיכה ופתרון תקלות</h1>
-
         <div class="support-card">
             <h2> ערוץ לא מנגן</h2>
             <p>החלפת מקור ניגון בצורה פשוטה ומהירה.</p>
@@ -200,7 +172,6 @@
                 <iframe src="https://player.vimeo.com/video/1171393659" allowfullscreen></iframe>
             </div>
         </div>
-
         <div class="support-card">
             <h2> אין תוצאות בסרטים וסדרות </h2>
             <p>מחיקת נתונים לחזרה להגדרות יצרן. </p>
@@ -224,32 +195,44 @@
                 if (!element) return;
                 const rect = element.getBoundingClientRect();
                 const navRect = nav.getBoundingClientRect();
-
                 blob.style.width = `${rect.width}px`;
                 blob.style.left = `${rect.left - navRect.left}px`;
-
-                // עדכון מחלקת הצבע לטקסט
                 links.forEach(l => l.classList.remove('active-blob'));
                 element.classList.add('active-blob');
             }
 
-            // זיהוי הדף הנוכחי והצבת הבועה
             const isSupportPage = window.location.pathname.includes("support.html");
             const activeInitial = isSupportPage ? document.getElementById("nav-support") : document.getElementById("nav-home");
-            
             setTimeout(() => moveBlob(activeInitial), 150);
 
-            // תגובה למעבר עכבר (הבועה עוקבת אחרי המשתמש)
-            links.forEach(link => {
-                link.addEventListener("mouseenter", function() {
-                    moveBlob(this);
+            // --- לוגיקת האנימציה בלחיצה ---
+            const clickables = document.querySelectorAll(".animate-click");
+            
+            clickables.forEach(el => {
+                el.addEventListener("click", function(e) {
+                    // אם זה קישור (<a>), אנחנו עוצרים את המעבר המיידי
+                    const href = this.getAttribute("href");
+                    if (href) {
+                        e.preventDefault();
+                    }
+
+                    // מוסיפים את המחלקה שמכווצת את האלמנט
+                    this.classList.add("is-pressed");
+
+                    // אחרי 200 מילי-שניות (מספיק זמן שהעין תקלוט), עוברים דף
+                    setTimeout(() => {
+                        this.classList.remove("is-pressed");
+                        if (href) {
+                            window.location.href = href;
+                        }
+                    }, 200);
                 });
             });
 
-            // חזרה למצב המקורי כשיוצאים מהתפריט
-            nav.addEventListener("mouseleave", function() {
-                moveBlob(activeInitial);
+            links.forEach(link => {
+                link.addEventListener("mouseenter", function() { moveBlob(this); });
             });
+            nav.addEventListener("mouseleave", function() { moveBlob(activeInitial); });
         });
 
         function shareSite() {
@@ -260,7 +243,9 @@
         }
 
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => alert("הקישור הועתק ללוח!"));
+            navigator.clipboard.writeText(text).then(() => {
+                alert("הקישור הועתק ללוח!");
+            });
         }
     </script>
 </body>
