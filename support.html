@@ -28,7 +28,7 @@
             overflow-x: hidden;
         }
 
-        /* --- הדר שקוף עם ניווט נוזלי --- */
+        /* --- הדר שקוף --- */
         .site-header {
             position: fixed;
             top: 0;
@@ -47,7 +47,7 @@
             box-sizing: border-box;
         }
 
-        .header-logo, .nav-link, .header-share, .kb-nav-btn {
+        .header-logo, .nav-link, .header-share, .kb-nav-btn, .animate-click {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
@@ -145,7 +145,6 @@
         .kb-sidebar h3 {
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.2rem;
             color: var(--highlight);
             border-bottom: 1px solid var(--separator);
             padding-bottom: 10px;
@@ -162,7 +161,6 @@
             cursor: pointer;
             border-radius: 12px;
             font-family: 'Rubik';
-            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -172,7 +170,6 @@
             background: var(--gold-gradient);
             color: #000;
             font-weight: 700;
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
         }
 
         .kb-main-view {
@@ -198,32 +195,41 @@
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* --- פוטר --- */
         .footer { 
             text-align: center; 
             padding: 40px 0; 
             background: #000;
-            color: #71717a; 
             border-top: 4px solid var(--border); 
             margin-top: 50px; 
         }
 
-        /* --- התאמה משופרת למובייל --- */
-        @media (max-width: 850px) {
-            .site-header { height: 65px; padding: 0 10px; }
-            .header-logo { display: none; } /* הסתרת לוגו בדף תמיכה בנייד */
+        /* --- תיקון מובייל (אייקונים בלבד בניווט) --- */
+        @media (max-width: 700px) {
+            .site-header { height: 70px; padding: 0 15px; justify-content: space-between; }
+            .header-logo { display: none !important; } 
             
-            .nav-container-liquid { position: relative; left: auto; transform: none; margin: 0 auto; }
-            .nav-link { padding: 8px 15px; font-size: 14px; }
-            .header-share span { display: none; }
+            .nav-container-liquid { 
+                position: static; 
+                transform: none; 
+                left: auto; 
+                flex: 0 1 auto;
+                background: rgba(13, 13, 13, 0.9);
+            }
 
-            .container { padding-top: 90px; padding-left: 10px; padding-right: 10px; }
+            /* הסרת כיתוב בניווט הבועה */
+            .nav-link { padding: 8px 18px; font-size: 18px; }
+            .nav-link span { display: none; } 
+
+            .header-share { padding: 8px 15px; }
+            .header-share span { display: none; } /* אייקון שיתוף בלבד */
+
+            .container { padding-top: 100px; padding-left: 10px; padding-right: 10px; }
             .kb-wrapper { grid-template-columns: 1fr; margin-top: 10px; }
 
             .kb-sidebar { 
                 position: relative; top: 0; display: flex; overflow-x: auto; gap: 8px; 
                 padding: 10px 5px; background: transparent; border: none; box-shadow: none;
-                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+                scrollbar-width: none;
             }
             .kb-sidebar::-webkit-scrollbar { display: none; }
             .kb-sidebar h3 { display: none; }
@@ -279,20 +285,19 @@
                     <h2 style="color: var(--highlight);">מידע על תאימות</h2>
                     <p>מדיה בוקס מותאמת באופן מלא למכשירי <strong>Android TV</strong>. 
                     <br>לא ניתן להתקין את האפליקציה ישירות על טלוויזיות Samsung או LG (מערכות Tizen/WebOS). עבור מכשירים אלו נדרש סטרימר אנדרואיד חיצוני.</p>
-                    <p>האפליקציה פועלת גם על טאבלטים וסמארטפונים, אך חוויית הממשק עשויה להשתנות.</p>
                 </div>
 
                 <div id="sec-no-play" class="kb-section">
                     <h2 style="color: var(--highlight);">החלפת מקור ניגון</h2>
-                    <p>במידה וערוץ מסוים לא נטען, ניתן להחליף מקור ניגון (ספק) בקלות. צפו במדריך הקצר:</p>
+                    <p>במידה וערוץ מסוים לא נטען, ניתן להחליף מקור ניגון בקלות:</p>
                     <div class="video-container">
                         <iframe src="https://player.vimeo.com/video/1171393659" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <div id="sec-reset" class="kb-section">
-                    <h2 style="color: var(--highlight);">איפוס וחזרה להגדרות</h2>
-                    <p>אם נתקלתם בבעיית "אין תוצאות" או שהאפליקציה אינה מגיבה כראוי, מומלץ לבצע מחיקת נתונים ואיפוס להגדרות יצרן:</p>
+                    <h2 style="color: var(--highlight);">איפוס נתונים</h2>
+                    <p>במידה והאפליקציה אינה מציגה תוצאות, מומלץ לבצע איפוס:</p>
                     <div class="video-container">
                         <iframe src="https://player.vimeo.com/video/1171951589" allowfullscreen></iframe>
                     </div>
