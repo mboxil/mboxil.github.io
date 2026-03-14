@@ -16,6 +16,7 @@
             --card: #171717;
             --border: #f59e0b;
             --gold-gradient: linear-gradient(180deg, rgba(251, 191, 36, 0.9) 0%, rgba(217, 119, 6, 1) 100%);
+            --separator: rgba(245, 158, 11, 0.15); 
         }
 
         body { 
@@ -27,7 +28,7 @@
             overflow-x: hidden;
         }
 
-        /* --- הדר שקוף --- */
+        /* --- הדר שקוף עם ניווט נוזלי --- */
         .site-header {
             position: fixed;
             top: 0;
@@ -37,7 +38,7 @@
             background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+            border-bottom: 1px solid var(--separator);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -46,17 +47,14 @@
             box-sizing: border-box;
         }
 
-        /* הגדרת לחיצה בסיסית לכל האלמנטים הלחיצים */
-        .header-logo, .nav-link, .header-share {
+        /* הגדרות לחיצה ואנימציה */
+        .header-logo, .nav-link, .header-share, .kb-nav-btn {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent; /* מסיר את הריבוע הכחול בנייד */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* הוספת מחלקה שתופעל דרך ה-JS */
-        .is-pressed {
-            transform: scale(0.85) !important;
-        }
+        .is-pressed { transform: scale(0.88) !important; }
 
         .header-logo img {
             height: 50px;
@@ -64,7 +62,6 @@
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        /* --- תפריט ניווט Liquid Glass --- */
         .nav-container-liquid {
             position: absolute;
             left: 50%;
@@ -105,8 +102,7 @@
             border-radius: 50px;
             z-index: 1;
             transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5),
-                        inset 0 4px 6px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5), inset 0 4px 6px rgba(255, 255, 255, 0.4);
         }
 
         .header-share {
@@ -122,19 +118,143 @@
             border: none;
         }
 
-        /* --- תוכן --- */
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; padding-top: 130px; }
-        h1 { color: var(--highlight); text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
-        .support-card { background: var(--card); border: 1px solid #262626; border-radius: 20px; padding: 25px; margin-bottom: 30px; }
-        .support-card h2 { color: var(--highlight); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; align-items: center; gap: 12px; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; margin-top: 20px; border: 1px solid #333; }
-        .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
-        .footer { text-align: center; padding: 40px 0; color: #71717a; border-top: 1px solid #1a1a1a; margin-top: 50px; }
+        /* --- מבנה תפריט צד (Side Nav Layout) --- */
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 130px 20px 40px; 
+        }
 
-        @media (max-width: 600px) {
-            .site-header { height: 70px; }
-            .nav-link span { display: none; }
-            .header-share span { display: none; }
+        .kb-wrapper {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* תפריט הצד */
+        .kb-sidebar {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--separator);
+            position: sticky;
+            top: 110px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .kb-sidebar h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--highlight);
+            border-bottom: 1px solid var(--separator);
+            padding-bottom: 10px;
+        }
+
+        .kb-nav-btn {
+            width: 100%;
+            text-align: right;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: none;
+            background: rgba(255, 255, 255, 0.03);
+            color: #a1a1aa;
+            cursor: pointer;
+            border-radius: 12px;
+            font-family: 'Rubik';
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .kb-nav-btn i { font-size: 1.1rem; }
+
+        .kb-nav-btn.active {
+            background: var(--gold-gradient);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .kb-nav-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        /* אזור התוכן המרכזי */
+.kb-main-view {
+            background: var(--card);
+            border-radius: 25px;
+            padding: 35px;
+            border: 1px solid var(--separator);
+            /* שינוי הגובה המינימלי כדי לשמור על הפוטר יציב */
+            min-height: 650px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kb-section {
+            display: none;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .kb-section.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .kb-section h2 {
+            color: var(--highlight);
+            margin-top: 0;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 2px solid #333;
+            margin-top: 25px;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- פוטר עם פס עבה לאחידות מלאה --- */
+        .footer { 
+            text-align: center; 
+            padding: 40px 0; 
+            background: #000;
+            color: #71717a; 
+            border-top: 4px solid var(--border); 
+            margin-top: 50px; 
+        }
+
+        /* התאמה למובייל */
+        @media (max-width: 850px) {
+            .kb-wrapper { grid-template-columns: 1fr; }
+            .kb-sidebar { position: relative; top: 0; display: flex; overflow-x: auto; gap: 10px; padding: 10px; border-bottom: 1px solid var(--separator); }
+            .kb-sidebar h3 { display: none; }
+            .kb-nav-btn { width: auto; white-space: nowrap; margin-bottom: 0; padding: 10px 20px; }
+            .kb-main-view { padding: 20px; }
         }
     </style>
 </head>
@@ -164,20 +284,46 @@
     </header>
 
     <div class="container">
-        <h1>תמיכה ופתרון תקלות</h1>
-        <div class="support-card">
-            <h2>ערוץ נתקע או לא מנגן</h2>
-            <p>החלפת מקור ניגון בצורה פשוטה ומהירה.</p>
-            <div class="video-container">
-                <iframe src="https://player.vimeo.com/video/1171393659" allowfullscreen></iframe>
-            </div>
-        </div>
-        <div class="support-card">
-            <h2> אין תוצאות בסרטים וסדרות </h2>
-            <p>מחיקת נתונים לחזרה להגדרות יצרן. </p>
-            <div class="video-container">
-                <iframe src="https://player.vimeo.com/video/1171951589" allowfullscreen></iframe>
-            </div>
+        <div class="kb-wrapper">
+            <aside class="kb-sidebar">
+                <h3>נושאי עזרה</h3>
+                <button class="kb-nav-btn active animate-click" onclick="switchKB(this, 'sec-compatibility')">
+                    <i class="fas fa-tv"></i> תאימות מכשירים
+                </button>
+                <button class="kb-nav-btn animate-click" onclick="switchKB(this, 'sec-no-play')">
+                    <i class="fas fa-play-circle"></i> ערוץ לא מנגן
+                </button>
+                <button class="kb-nav-btn animate-click" onclick="switchKB(this, 'sec-reset')">
+                    <i class="fas fa-undo-alt"></i> איפוס נתונים
+                </button>
+            </aside>
+
+            <main class="kb-main-view">
+                
+                <div id="sec-compatibility" class="kb-section active">
+                    <h2>מידע על תאימות</h2>
+                    <p>מדיה בוקס מותאמת באופן מלא למכשירי <strong>Android TV</strong>. 
+                    <br>לא ניתן להתקין את האפליקציה ישירות על טלוויזיות Samsung או LG (מערכות Tizen/WebOS). עבור מכשירים אלו נדרש סטרימר אנדרואיד חיצוני.</p>
+                    <p>האפליקציה פועלת גם על טאבלטים וסמארטפונים, אך חוויית הממשק עשויה להשתנות.</p>
+                </div>
+
+                <div id="sec-no-play" class="kb-section">
+                    <h2>החלפת מקור ניגון</h2>
+                    <p>במידה וערוץ מסוים לא נטען, ניתן להחליף מקור ניגון (ספק) בקלות. צפו במדריך הקצר:</p>
+                    <div class="video-container">
+                        <iframe src="https://player.vimeo.com/video/1171393659" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div id="sec-reset" class="kb-section">
+                    <h2>איפוס וחזרה להגדרות</h2>
+                    <p>אם נתקלתם בבעיית "אין תוצאות" או שהאפליקציה אינה מגיבה כראוי, מומלץ לבצע מחיקת נתונים ואיפוס להגדרות יצרן:</p>
+                    <div class="video-container">
+                        <iframe src="https://player.vimeo.com/video/1171951589" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </main>
         </div>
     </div>
 
@@ -186,6 +332,13 @@
     </footer>
 
     <script>
+        function switchKB(btn, sectionId) {
+            document.querySelectorAll('.kb-nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.kb-section').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             const nav = document.querySelector(".nav-container-liquid");
             const blob = document.querySelector(".liquid-blob");
@@ -201,31 +354,25 @@
                 element.classList.add('active-blob');
             }
 
-            const isSupportPage = window.location.pathname.includes("support.html");
-            const activeInitial = isSupportPage ? document.getElementById("nav-support") : document.getElementById("nav-home");
+            const activeInitial = document.getElementById("nav-support");
             setTimeout(() => moveBlob(activeInitial), 150);
 
-            // --- לוגיקת האנימציה בלחיצה ---
+            // לוגיקת אנימציית לחיצה פיזית
             const clickables = document.querySelectorAll(".animate-click");
-            
             clickables.forEach(el => {
                 el.addEventListener("click", function(e) {
-                    // אם זה קישור (<a>), אנחנו עוצרים את המעבר המיידי
                     const href = this.getAttribute("href");
-                    if (href) {
+                    if (href && !href.startsWith("#")) {
                         e.preventDefault();
-                    }
-
-                    // מוסיפים את המחלקה שמכווצת את האלמנט
-                    this.classList.add("is-pressed");
-
-                    // אחרי 200 מילי-שניות (מספיק זמן שהעין תקלוט), עוברים דף
-                    setTimeout(() => {
-                        this.classList.remove("is-pressed");
-                        if (href) {
+                        this.classList.add("is-pressed");
+                        setTimeout(() => {
+                            this.classList.remove("is-pressed");
                             window.location.href = href;
-                        }
-                    }, 200);
+                        }, 200);
+                    } else {
+                        this.classList.add("is-pressed");
+                        setTimeout(() => this.classList.remove("is-pressed"), 200);
+                    }
                 });
             });
 
@@ -243,9 +390,7 @@
         }
 
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert("הקישור הועתק ללוח!");
-            });
+            navigator.clipboard.writeText(text).then(() => alert("הקישור הועתק ללוח!"));
         }
     </script>
 </body>
