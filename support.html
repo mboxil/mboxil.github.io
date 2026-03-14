@@ -47,7 +47,6 @@
             box-sizing: border-box;
         }
 
-        /* הגדרות לחיצה ואנימציה */
         .header-logo, .nav-link, .header-share, .kb-nav-btn {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
@@ -118,7 +117,7 @@
             border: none;
         }
 
-        /* --- מבנה תפריט צד (Side Nav Layout) --- */
+        /* --- מבנה תפריט צד --- */
         .container { 
             max-width: 1100px; 
             margin: 0 auto; 
@@ -132,7 +131,6 @@
             align-items: start;
         }
 
-        /* תפריט הצד */
         .kb-sidebar {
             background: var(--card);
             border-radius: 20px;
@@ -141,6 +139,7 @@
             position: sticky;
             top: 110px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            height: fit-content;
         }
 
         .kb-sidebar h3 {
@@ -167,10 +166,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: 0.3s;
         }
-
-        .kb-nav-btn i { font-size: 1.1rem; }
 
         .kb-nav-btn.active {
             background: var(--gold-gradient);
@@ -179,66 +175,30 @@
             box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
         }
 
-        .kb-nav-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-        }
-
-        /* אזור התוכן המרכזי */
-.kb-main-view {
+        .kb-main-view {
             background: var(--card);
             border-radius: 25px;
             padding: 35px;
             border: 1px solid var(--separator);
-            /* שינוי הגובה המינימלי כדי לשמור על הפוטר יציב */
             min-height: 650px; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
         }
 
-        .kb-section {
-            display: none;
-            animation: slideUp 0.5s ease forwards;
-        }
-
-        .kb-section.active {
-            display: block;
-        }
+        .kb-section { display: none; animation: slideUp 0.5s ease forwards; }
+        .kb-section.active { display: block; }
 
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .kb-section h2 {
-            color: var(--highlight);
-            margin-top: 0;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+        .video-container { 
+            position: relative; padding-bottom: 56.25%; height: 0; border-radius: 18px; 
+            overflow: hidden; border: 2px solid #333; margin-top: 25px; background: #000; 
         }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 2px solid #333;
-            margin-top: 25px;
-            background: #000;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* --- פוטר עם פס עבה לאחידות מלאה --- */
+        /* --- פוטר --- */
         .footer { 
             text-align: center; 
             padding: 40px 0; 
@@ -248,13 +208,32 @@
             margin-top: 50px; 
         }
 
-        /* התאמה למובייל */
+        /* --- התאמה משופרת למובייל --- */
         @media (max-width: 850px) {
-            .kb-wrapper { grid-template-columns: 1fr; }
-            .kb-sidebar { position: relative; top: 0; display: flex; overflow-x: auto; gap: 10px; padding: 10px; border-bottom: 1px solid var(--separator); }
+            .site-header { height: 65px; padding: 0 10px; }
+            .header-logo { display: none; } /* הסתרת לוגו בדף תמיכה בנייד */
+            
+            .nav-container-liquid { position: relative; left: auto; transform: none; margin: 0 auto; }
+            .nav-link { padding: 8px 15px; font-size: 14px; }
+            .header-share span { display: none; }
+
+            .container { padding-top: 90px; padding-left: 10px; padding-right: 10px; }
+            .kb-wrapper { grid-template-columns: 1fr; margin-top: 10px; }
+
+            .kb-sidebar { 
+                position: relative; top: 0; display: flex; overflow-x: auto; gap: 8px; 
+                padding: 10px 5px; background: transparent; border: none; box-shadow: none;
+                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+            }
+            .kb-sidebar::-webkit-scrollbar { display: none; }
             .kb-sidebar h3 { display: none; }
-            .kb-nav-btn { width: auto; white-space: nowrap; margin-bottom: 0; padding: 10px 20px; }
-            .kb-main-view { padding: 20px; }
+
+            .kb-nav-btn { 
+                width: auto; white-space: nowrap; margin-bottom: 0; padding: 10px 15px; 
+                font-size: 13px; flex-shrink: 0; border: 1px solid var(--separator);
+            }
+
+            .kb-main-view { padding: 20px; min-height: auto; }
         }
     </style>
 </head>
@@ -268,18 +247,15 @@
         <nav class="nav-container-liquid">
             <div class="liquid-blob"></div>
             <a href="https://mboxil.github.io/index.html" class="nav-link animate-click" id="nav-home">
-                <i class="fas fa-home"></i>
-                <span>ראשי</span>
+                <i class="fas fa-home"></i><span>ראשי</span>
             </a>
             <a href="https://mboxil.github.io/support.html" class="nav-link animate-click" id="nav-support">
-                <i class="fas fa-headset"></i>
-                <span>תמיכה</span>
+                <i class="fas fa-headset"></i><span>תמיכה</span>
             </a>
         </nav>
 
         <div class="header-share animate-click" onclick="shareSite()">
-            <i class="fas fa-share-alt"></i>
-            <span>שיתוף</span>
+            <i class="fas fa-share-alt"></i><span>שיתוף</span>
         </div>
     </header>
 
@@ -299,16 +275,15 @@
             </aside>
 
             <main class="kb-main-view">
-                
                 <div id="sec-compatibility" class="kb-section active">
-                    <h2>מידע על תאימות</h2>
+                    <h2 style="color: var(--highlight);">מידע על תאימות</h2>
                     <p>מדיה בוקס מותאמת באופן מלא למכשירי <strong>Android TV</strong>. 
                     <br>לא ניתן להתקין את האפליקציה ישירות על טלוויזיות Samsung או LG (מערכות Tizen/WebOS). עבור מכשירים אלו נדרש סטרימר אנדרואיד חיצוני.</p>
                     <p>האפליקציה פועלת גם על טאבלטים וסמארטפונים, אך חוויית הממשק עשויה להשתנות.</p>
                 </div>
 
                 <div id="sec-no-play" class="kb-section">
-                    <h2>החלפת מקור ניגון</h2>
+                    <h2 style="color: var(--highlight);">החלפת מקור ניגון</h2>
                     <p>במידה וערוץ מסוים לא נטען, ניתן להחליף מקור ניגון (ספק) בקלות. צפו במדריך הקצר:</p>
                     <div class="video-container">
                         <iframe src="https://player.vimeo.com/video/1171393659" allowfullscreen></iframe>
@@ -316,13 +291,12 @@
                 </div>
 
                 <div id="sec-reset" class="kb-section">
-                    <h2>איפוס וחזרה להגדרות</h2>
+                    <h2 style="color: var(--highlight);">איפוס וחזרה להגדרות</h2>
                     <p>אם נתקלתם בבעיית "אין תוצאות" או שהאפליקציה אינה מגיבה כראוי, מומלץ לבצע מחיקת נתונים ואיפוס להגדרות יצרן:</p>
                     <div class="video-container">
                         <iframe src="https://player.vimeo.com/video/1171951589" allowfullscreen></iframe>
                     </div>
                 </div>
-
             </main>
         </div>
     </div>
@@ -357,7 +331,6 @@
             const activeInitial = document.getElementById("nav-support");
             setTimeout(() => moveBlob(activeInitial), 150);
 
-            // לוגיקת אנימציית לחיצה פיזית
             const clickables = document.querySelectorAll(".animate-click");
             clickables.forEach(el => {
                 el.addEventListener("click", function(e) {
@@ -376,22 +349,16 @@
                 });
             });
 
-            links.forEach(link => {
-                link.addEventListener("mouseenter", function() { moveBlob(this); });
-            });
+            links.forEach(link => { link.addEventListener("mouseenter", function() { moveBlob(this); }); });
             nav.addEventListener("mouseleave", function() { moveBlob(activeInitial); });
         });
 
         function shareSite() {
             const shareLink = "https://tiny.cc/mboxsite";
-            if (navigator.share) {
-                navigator.share({ url: shareLink }).catch(() => copyToClipboard(shareLink));
-            } else { copyToClipboard(shareLink); }
+            if (navigator.share) { navigator.share({ url: shareLink }).catch(() => copyToClipboard(shareLink)); } 
+            else { copyToClipboard(shareLink); }
         }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => alert("הקישור הועתק ללוח!"));
-        }
+        function copyToClipboard(text) { navigator.clipboard.writeText(text).then(() => alert("הקישור הועתק!")); }
     </script>
 </body>
 </html>
