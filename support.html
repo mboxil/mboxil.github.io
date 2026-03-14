@@ -5,20 +5,26 @@
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>תמיכה - מדיה בוקס</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Assistant:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
         :root { 
             --bg: #0a0a0a;
             --text: #ffffff;
-            --highlight: #fbbf24;
+            --muted: #a1a1aa; 
             --card: #171717;
             --border: #f59e0b;
-            --gold-gradient: linear-gradient(180deg, rgba(251, 191, 36, 0.9) 0%, rgba(217, 119, 6, 1) 100%);
+            --gold-bright: #fbbf24; 
+            --gold-glow: rgba(251, 191, 36, 0.4);
+            --shadow: rgba(0, 0, 0, 0.9);
+            --secondary-gradient: linear-gradient(180deg, rgba(251, 191, 36, 0.9) 0%, rgba(217, 119, 6, 1) 100%);
+            --highlight: #fbbf24;
             --separator: rgba(245, 158, 11, 0.15); 
         }
 
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body { 
             margin: 0; 
             font-family: 'Rubik', sans-serif; 
@@ -28,7 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* --- הדר שקוף --- */
+        /* --- הדר שקוף (Glassmorphism) --- הועתק בדיוק מ-index */
         .site-header {
             position: fixed;
             top: 0;
@@ -44,16 +50,28 @@
             justify-content: space-between;
             padding: 0 5%;
             z-index: 100000;
-            box-sizing: border-box;
         }
 
-        .header-logo, .nav-link, .header-share, .kb-nav-btn, .animate-click {
+        .header-logo, .nav-link, .header-share, .animate-click {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .is-pressed { transform: scale(0.88) !important; }
+        .is-pressed { transform: scale(0.85) !important; }
+
+        .header-logo {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s ease-in-out;
+            pointer-events: none;
+        }
+
+        .header-logo.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
 
         .header-logo img {
             height: 50px;
@@ -97,15 +115,16 @@
             left: 4px;
             height: calc(100% - 8px);
             width: 0;
-            background: var(--gold-gradient);
+            background: var(--secondary-gradient);
             border-radius: 50px;
             z-index: 1;
             transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5), inset 0 4px 6px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5),
+                        inset 0 4px 6px rgba(255, 255, 255, 0.4);
         }
 
         .header-share {
-            background: var(--gold-gradient);
+            background: var(--secondary-gradient);
             color: #000;
             padding: 8px 20px;
             border-radius: 50px;
@@ -117,7 +136,7 @@
             border: none;
         }
 
-        /* --- מבנה תפריט צד --- */
+        /* --- מבנה ה-Support הספציפי --- */
         .container { 
             max-width: 1100px; 
             margin: 0 auto; 
@@ -167,7 +186,7 @@
         }
 
         .kb-nav-btn.active {
-            background: var(--gold-gradient);
+            background: var(--secondary-gradient);
             color: #000;
             font-weight: 700;
         }
@@ -203,7 +222,7 @@
             margin-top: 50px; 
         }
 
-        /* --- תיקון מובייל (אייקונים בלבד בניווט) --- */
+        /* --- תיקון מובייל (מועתק מ-index עם אייקונים בלבד) --- */
         @media (max-width: 700px) {
             .site-header { height: 70px; padding: 0 15px; justify-content: space-between; }
             .header-logo { display: none !important; } 
@@ -213,15 +232,13 @@
                 transform: none; 
                 left: auto; 
                 flex: 0 1 auto;
-                background: rgba(13, 13, 13, 0.9);
             }
 
-            /* הסרת כיתוב בניווט הבועה */
             .nav-link { padding: 8px 18px; font-size: 18px; }
             .nav-link span { display: none; } 
 
             .header-share { padding: 8px 15px; }
-            .header-share span { display: none; } /* אייקון שיתוף בלבד */
+            .header-share span { display: none; } 
 
             .container { padding-top: 100px; padding-left: 10px; padding-right: 10px; }
             .kb-wrapper { grid-template-columns: 1fr; margin-top: 10px; }
@@ -284,7 +301,7 @@
                 <div id="sec-compatibility" class="kb-section active">
                     <h2 style="color: var(--highlight);">מידע על תאימות</h2>
                     <p>מדיה בוקס מותאמת באופן מלא למכשירי <strong>Android TV</strong>. 
-                    <br>לא ניתן להתקין את האפליקציה ישירות על טלוויזיות Samsung או LG (מערכות Tizen/WebOS). עבור מכשירים אלו נדרש סטרימר אנדרואיד חיצוני.</p>
+                    <br>לא ניתן להתקין את האפליקציה ישירות על טלוויזיות Samsung או LG (מערכות Tizen/WebOS).</p>
                 </div>
 
                 <div id="sec-no-play" class="kb-section">
@@ -322,6 +339,7 @@
             const nav = document.querySelector(".nav-container-liquid");
             const blob = document.querySelector(".liquid-blob");
             const links = document.querySelectorAll(".nav-link");
+            const headerLogo = document.querySelector('.header-logo');
 
             function moveBlob(element) {
                 if (!element) return;
@@ -335,6 +353,12 @@
 
             const activeInitial = document.getElementById("nav-support");
             setTimeout(() => moveBlob(activeInitial), 150);
+
+            // לוגיקת גלילה דינמית ללוגו (כמו ב-index)
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 150) { headerLogo.classList.add('visible'); } 
+                else { headerLogo.classList.remove('visible'); }
+            });
 
             const clickables = document.querySelectorAll(".animate-click");
             clickables.forEach(el => {
